@@ -1,11 +1,21 @@
-require 'spec_helper'
+require_relative '../bloc_works.rb'
+require "rack/test"
+require "test/unit"
 
-describe BlocWorks do
-  it 'has a version number' do
-    expect(BlocWorks::VERSION).not_to be nil
+class HomepageTest < Test::Unit::TestCase
+  include Rack::Test::Methods
+
+  def app
+    BlocWorks::Application.new
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  def test_homepage_returns_a_200_status
+    get "/"
+    assert last_response.ok?
+  end
+
+  def test_homepage_innerHTML_says_Hello
+    get "/"
+    assert_equal("Hello Blocheads!", last_response.body, message = "fail")
   end
 end
