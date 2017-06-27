@@ -18,4 +18,9 @@ class HomepageTest < Test::Unit::TestCase
     get "/"
     assert_equal("Hello Blocheads!", last_response.body, message = "fail")
   end
+
+  def test_favicon_page_404
+    get "/favicon.ico"
+    assert !last_response.ok?
+  end
 end
